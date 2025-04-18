@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Sign Language to Text</title>
+    <style>
+        #noon-to-dusk {
+            background: linear-gradient(to right, #ff6e7f, #bfe9ff);
+        }
+    </style>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateWords() {
+            $.ajax({
+                url: '/get_words',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#button').text(data.words.word);
+                    $('#button1').text(data.words.word1);
+                    $('#button2').text(data.words.word2);
+                    $('#button3').text(data.words.word3);
+                    $('#button4').text(data.words.word4);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+        
+        function updateWord(button) {
+            var sentenceElement = document.getElementById('senten');
+            sentenceElement.textContent = (sentenceElement.textContent || '') + ' ' + button.textContent;
+            word='';
+        }
+        function deleteword(){
+            var sentenceElement = document.getElementById('senten');
+            sentenceElement.textContent = ' ';
+
+        }
+        updateWords();
+        setInterval(updateWords, 500);
+    </script>
+<body>
+    <div class="container-fluid" style="height: 100vh; background: linear-gradient(to right, #ff6e7f, #bfe9ff);">
+        <div class="col-lg-8 offset-lg-3">
+            <h3 class="mt-5">Platform for Sign Language to Text Conversion</h3>
+         </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="card" style="background: transparent; border-radius: 30px; box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4>Team Members-IOMP</h4>
+                        <ul>
+                            <li>Rutam Risaldar</li>
+                            <li>K Sainath</li>
+                            <li>Patha Revanth</li>
+                            <li>L Sai Sathwik </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 ml-1">
+                <h3>Live video feed</h3>
+                <img src="{{ url_for('video_feed') }}" class="float-left" width="100%">
+            </div>
+            <div class="col-lg-5 ml-5">
+                <div class="card" style="background: transparent; border-radius: 30px; box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <div class="card-body" id="textBox">
+                            <h2>Current word:</h2>
+                            <h3 id="button">{{ word }}</h3>
+                            <button class="btn btn-success btn-lg mt-2" id="button1" onclick="updateWord(this)" >{{ word1 }}</button>
+                            <button class="btn btn-success btn-lg mt-2" id="button2" onclick="updateWord(this)">{{ word2 }}</button>
+                            <button class="btn btn-success btn-lg mt-2" id="button3" onclick="updateWord(this)">{{ word3 }}</button>
+                            <button class="btn btn-success btn-lg mt-2" id="button4" onclick="updateWord(this)">{{ word4 }}</button>
+                        </div>
+                        <h2 class="card-title">Sentence formed:</h2>
+                        <h3 class="card-title" id="senten"></h3>
+                        <button class="btn btn-danger btn-md" id="button5" onclick="deleteword(this)">CLEAR</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card" style="background: transparent; border-radius: 30px; box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);">
+                    <h3 class="card-title">Legend and Common Symbols:</h3>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{ url_for('static', filename='next.png') }}"  alt="next" style=" width: 100px;
+                                height: 100px;"><h6>Next alphabet</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{{ url_for('static', filename='new word.png') }}"  alt="next" style=" width: 100px;
+                        height: 100px;"><h6>Next word</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <img src="{{ url_for('static', filename='backspace.png') }}"  alt="back" style=" width: 100px;
+                        height: 100px;"><h6>Backspace</h6>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="{{ url_for('static', filename='fingers.jpeg') }}"  alt="next" style=" width: 200px;
+                        height: 200px;"><h6>Finger alphabets-ASL</h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6> Click on the button with the required word to include it in the sentence.</h6>
+                                    <h6>Use CLEAR button to remove the selected words. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+</html>
