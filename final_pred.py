@@ -24,7 +24,7 @@ class Application:
     def __init__(self):
         self.vs = cv2.VideoCapture(0)
         self.current_image = None
-        self.model = load_model('D:\ialiomp\Sign-Language-To-Text-and-Speech-Conversion\cnn8grps_rad1_model.h5')
+        self.model = load_model("C:\\Users\\Rahul\\Downloads\\SignToText-main\\SignToText-main\\cnn8grps_rad1_model.h5")
         self.ct = {}
         self.ct['blank'] = 0
         self.blank_flag = 0
